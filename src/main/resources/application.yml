@@ -43,6 +43,9 @@ spring:
       on-profile: qa
 welcome:
   message: Welcome to Daily Code Buffer!!
+logging:
+  level:
+    root: DEBUG
 
 management:
   endpoints:
