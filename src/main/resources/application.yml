@@ -8,34 +8,44 @@ spring:
 ---
 
 spring:
-  profiles: dev
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     password: admin
-    url: jdbc:mysql://localhost:3306/dcbapp
+    url: jdbc:mysql://localhost:3306/dcbapp?
     username: root
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
+  config:
+    activate:
+      on-profile: dev
 welcome:
   message: Welcome to Daily Code Buffer!!
 
 ---
 
 spring:
-  profiles: qa
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     password: admin
-    url: jdbc:mysql://localhost:3306/dcbapp-qa
+    url: jdbc:mysql://localhost:3306/dcbapp-qa?
     username: root
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+  config:
+    activate:
+      on-profile: qa
 welcome:
   message: Welcome to Daily Code Buffer!!
+logging:
+  level:
+    root: DEBUG
 
 management:
   endpoints:
@@ -47,15 +57,17 @@ management:
 ---
 
 spring:
-  profiles: prod
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     password: admin
-    url: jdbc:mysql://localhost:3306/dcbapp-prod
+    url: jdbc:mysql://localhost:3306/dcbapp-prod?
     username: root
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
+  config:
+    activate:
+      on-profile: prod
 welcome:
   message: Welcome to Daily Code Buffer!!
