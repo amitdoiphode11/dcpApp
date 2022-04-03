@@ -38,7 +38,7 @@ public class DepartmentController {
     @GetMapping("/department")
     public List<Department> getAllDepartment() {
         LOGGER.info("getAllDepartment");
-        return departmentService.getAppDepartments();
+        return departmentService.getDepartments();
     }
 
     /**
