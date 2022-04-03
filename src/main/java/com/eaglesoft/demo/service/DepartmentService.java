@@ -9,7 +9,7 @@ public interface DepartmentService  {
 
     Department saveDepartment(Department department);
 
-    List<Department> getAppDepartments();
+    List<Department> getDepartments();
 
     Department getDepartmentByCode(String code);
 
