@@ -4,39 +4,52 @@ import com.eaglesoft.demo.entity.Department;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.ActiveProfiles;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
-
-@SpringBootTest
+@DataJpaTest
+@ActiveProfiles("test")
 class DepartmentRepositoryTest {
 
     @Autowired
     private DepartmentRepository repository;
 
+    private Department department;
+
+    private Department department1;
+
     @BeforeEach
     void setUp() {
-    }
-
-    @Test
-    void testSaveDepartment() {
-        Department department = Department.builder()
+        department = Department.builder()
                 .departmentId(1L)
                 .departmentCode("IT")
                 .departmentName("IT")
                 .departmentAddress("Satara")
                 .build();
 
-        Department department1 = repository.save(department);
+        department1 = Department.builder()
+                .departmentId(2L)
+                .departmentCode("COMP")
+                .departmentName("COMP")
+                .departmentAddress("Pune")
+                .build();
 
+        List<Department> departmentList = new ArrayList<>();
+        departmentList.add(department);
+        departmentList.add(department1);
+        repository.saveAll(departmentList);
+    }
+
+    @Test
+    void testSaveDepartment() {
         assertNotNull(department1);
         List<Department> list = repository.findAll();
-        assertEquals(1, list.size());
+        assertEquals(2, list.size());
         assertEquals("IT", list.get(0).getDepartmentCode());
     }
 
@@ -50,20 +63,16 @@ class DepartmentRepositoryTest {
     void testFindAll() {
         List<Department> departmentList = repository.findAll();
         assertNotNull(departmentList);
-        assertEquals(1, departmentList.size());
+        assertEquals(2, departmentList.size());
     }
 
     @Test
     void testDelete() {
-        Department department = Department.builder()
-                .departmentId(1L)
-                .departmentCode("IT")
-                .departmentName("IT")
-                .departmentAddress("Satara")
-                .build();
-        repository.delete(department);
+        repository.delete(repository.findByDepartmentCode("IT"));
         Department departmentCode = repository.findByDepartmentCode("IT");
         assertNull(departmentCode);
+        List<Department> departmentList1 = repository.findAll();
+        assertEquals(1, departmentList1.size());
     }
 
 }
