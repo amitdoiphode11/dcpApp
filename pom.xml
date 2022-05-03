@@ -10,11 +10,11 @@
     </parent>
     <groupId>com.eaglesoft</groupId>
     <artifactId>demo1</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <name>dcb-app</name>
     <description>dcb-app</description>
     <properties>
-        <java.version>11</java.version>
+        <java.version>17</java.version>
     </properties>
     <dependencies>
         <dependency>
